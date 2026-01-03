@@ -1,9 +1,3 @@
-//
-//  HomeView.swift
-//  CryptoProject
-//
-//  Created by Илья Ануфриев on 30.12.2025.
-//
 
 import SwiftUI
 
