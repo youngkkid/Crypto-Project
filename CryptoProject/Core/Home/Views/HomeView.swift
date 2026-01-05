@@ -5,14 +5,18 @@ struct HomeView: View {
     
     @EnvironmentObject private var vm: HomeViewModel
     @State private var showPortfolio: Bool = false
+    @State private var showPortfolioView: Bool = false
     
     var body: some View {
         ZStack {
             Color.theme.background
                 .ignoresSafeArea()
+                .sheet(isPresented: $showPortfolioView, content: { PortfolioView()
+                        .environmentObject(vm)
+                })
             
             VStack {
-                HomeHeader(showPortfolio: $showPortfolio)
+                homeHeader
                 
                 HomeStatsView(showPortfolio: $showPortfolio)
                 
@@ -36,15 +40,17 @@ struct HomeView: View {
     }
 }
 
-
-struct HomeHeader: View {
+extension HomeView {
     
-    @Binding var showPortfolio: Bool
-    
-    var body: some View {
+    private var homeHeader: some View {
         HStack {
             CircleButtonView(iconName: showPortfolio ? "plus" : "info")
                 .animation(.none, value: showPortfolio)
+                .onTapGesture {
+                    if showPortfolio {
+                        showPortfolioView.toggle()
+                    }
+                }
                 .background(
                     CircleButtonAnimationView(animate: $showPortfolio)
                 )
@@ -67,11 +73,6 @@ struct HomeHeader: View {
         .padding(.horizontal)
     }
     
-}
-
-
-
-extension HomeView {
     private var allCoinsList: some View {
         List {
             ForEach(vm.allCoins) { coin in
