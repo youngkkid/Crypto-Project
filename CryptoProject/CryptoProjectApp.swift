@@ -12,9 +12,8 @@ struct CryptoProjectApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NavigationView {
+            NavigationStack {
                 HomeView()
-                    .navigationBarHidden(true)
             }
             .environmentObject(vm)
         }
