@@ -1,25 +1,15 @@
-//
-//  SettingsView.swift
-//  CryptoProject
-//
-//  Created by Илья Ануфриев on 08.01.2026.
-//
-
 import SwiftUI
 
 struct SettingsView: View {
     
-    let defaultURL = URL(string: "https://www.google.com")!
-    let youtube = URL(string: "https://www.youtube.com")!
-    let coffeeURL = URL(string: "https://www.buymeacoffee.com/nicksarno")!
-    let coingeckoURL  = URL(string: "https://api.coingecko.com")!
-    let personalURL = URL(string: "https://www.google.com")!
+    private let defaultURL = URL(string: "https://www.google.com")!
+    private let coingeckoURL  = URL(string: "https://api.coingecko.com")!
+    private let portfolioURL = URL(string: "https://nonchalant-chill-9f1.notion.site/23a33130410280e28145cbbace366109?source=copy_link")!
     
     
     var body: some View {
         NavigationView {
             List {
-                swiftfulThinkingLink
                 coingeckoSection
                 developerSection
                 applicationSection
@@ -39,26 +29,6 @@ struct SettingsView: View {
 
 
 extension SettingsView {
-    private var swiftfulThinkingLink: some View {
-        Section {
-            VStack(alignment: .leading) {
-                Image("logo")
-                    .resizable()
-                    .frame(width: 100, height: 100)
-                    .clipShape(RoundedRectangle(cornerRadius: 20))
-                Text("This app was made by following a @SwiftfulThinking course on YouTube. It uses MVVM architecture, Combine and CoreData!")
-                    .font(.callout)
-                    .fontWeight(.medium)
-                    .foregroundColor(Color.theme.accent)
-            }
-            .padding(.vertical)
-            Link("Subscribe on YouTube 🔥", destination: youtube)
-            Link("Support his coffee addiction ☕️", destination: coffeeURL)
-        } header: {
-            Text("Swiftful Thinking")
-        }
-    }
-    
     private var coingeckoSection: some View {
         Section {
             VStack(alignment: .leading) {
@@ -67,7 +37,7 @@ extension SettingsView {
                     .scaledToFit()
                     .frame(height: 100)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
-                Text("The cryptocurrency data is used in this app comes from a free API from CoinGecko! Prices may be slightly delayed.")
+                Text("The cryptocurrency data is used in this app comes from a free API from CoinGecko!")
                     .font(.callout)
                     .fontWeight(.medium)
                     .foregroundColor(Color.theme.accent)
@@ -92,7 +62,7 @@ extension SettingsView {
                     .foregroundColor(Color.theme.accent)
             }
             .padding(.vertical)
-            Link("Check out my portfolio 🔥", destination: coingeckoURL)
+            Link("Check out my portfolio 💼", destination: portfolioURL)
         } header: {
             Text("Developer")
         }
@@ -111,5 +81,9 @@ extension SettingsView {
 }
 
 #Preview {
-    SettingsView()
+    let dev = DeveloperPreview.instance
+    NavigationStack {
+        SettingsView()
+    }
+    .environmentObject(dev.homeVM)
 }
